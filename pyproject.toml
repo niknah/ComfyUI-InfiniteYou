@@ -1,0 +1,13 @@
+# pyproject.toml
+[project]
+name = "ComfyUI-InifiniteYou" # Unique identifier for your node. Immutable after creation.
+description = "ComfyUI custom_node for ByteDance's InfiniteYou"
+version = "1.0.0" # Custom Node version. Must be semantically versioned.
+license = {text = "MIT License"}
+
+[project.urls]
+Repository = "https://github.com/niknah/ComfyUI-InfiniteYou"
+
+[tool.comfy]
+PublisherId = "niknah"
+DisplayName = "ComfyUI-InfiniteYou" # Display name for the Custom Node. Can be changed later.
