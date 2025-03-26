@@ -101,7 +101,9 @@ class InfiniteYouSampler:
         model_version='aes_stage2',
         control_image=None,
     ):
-        torch.cuda.set_device(comfy.model_management.get_torch_device())
+        device = comfy.model_management.get_torch_device()
+        if device.type == 'cuda':
+            torch.cuda.set_device(device)
 
         infu_flux_version = 'v1.0'
         model_dir = 'ByteDance/InfiniteYou'
