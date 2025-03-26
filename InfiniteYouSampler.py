@@ -13,7 +13,7 @@ repo_dir = os.path.join(this_path,"InfiniteYou")
 requirements_txt = os.path.join(repo_dir,"requirements.txt")
 
 if not os.path.exists(requirements_txt):
-    pygit2.clone_repository("https://github.com/bytedance/InfiniteYou", repo_dir, depth=1)
+    pygit2.clone_repository("https://github.com/azmenak/InfiniteYou", repo_dir, depth=1)
     if not os.path.exists(requirements_txt):
         print("*** Could not get InfiniteYou repository.  Please install git.")
 
