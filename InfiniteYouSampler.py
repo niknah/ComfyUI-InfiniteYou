@@ -32,6 +32,7 @@ class InfiniteYouSampler:
                 "id_image": ("IMAGE",),
                 "base_model": (['auto'] + folder_paths.get_filename_list("diffusion_models"),),
                 "seed": ("INT", {
+                    "default": 42
                 }),
                 "prompt": ("STRING", {
                     "multiline": True,
@@ -79,6 +80,12 @@ class InfiniteYouSampler:
                     "default": 'aes_stage2'
                 }),
                 "control_image": ("IMAGE",),
+                "enable_realism": ("BOOLEAN", {
+                    "default": False
+                }),
+                "enable_anti_blur": ("BOOLEAN", {
+                    "default": False
+                }),
             },
         }
 
@@ -100,6 +107,8 @@ class InfiniteYouSampler:
         infusenet_guidance_end=1.0,
         model_version='aes_stage2',
         control_image=None,
+        enable_realism=False,
+        enable_anti_blur=False,
     ):
         device = comfy.model_management.get_torch_device()
         if device.type == 'cuda':
@@ -126,6 +135,15 @@ class InfiniteYouSampler:
             infu_flux_version=infu_flux_version,
             model_version=model_version,
         )
+
+        # Load LoRAs if enabled
+        loras = []
+        if enable_realism:
+            loras.append([os.path.join(model_dir, 'supports/optional_loras/flux_realism_lora.safetensors'), 'realism', 1.0])
+        if enable_anti_blur:
+            loras.append([os.path.join(model_dir, 'supports/optional_loras/flux_anti_blur_lora.safetensors'), 'anti_blur', 1.0])
+        if loras:
+            pipe.load_loras(loras)
 
         control_image_pil = None
         if control_image is not None:
