@@ -113,6 +113,8 @@ class InfiniteYouSampler:
         device = comfy.model_management.get_torch_device()
         if device.type == 'cuda':
             torch.cuda.set_device(device)
+        elif device.type == 'mps':
+            torch.set_default_device("mps:0")
 
         infu_flux_version = 'v1.0'
         model_dir = 'ByteDance/InfiniteYou'
@@ -137,11 +139,14 @@ class InfiniteYouSampler:
         )
 
         # Load LoRAs if enabled
+        lora_dir = os.path.join(model_dir, 'supports', 'optional_loras')
+        if not os.path.exists(lora_dir): 
+            lora_dir = "./models/InfiniteYou/supports/optional_loras"
         loras = []
         if enable_realism:
-            loras.append([os.path.join(model_dir, 'supports/optional_loras/flux_realism_lora.safetensors'), 'realism', 1.0])
+            loras.append([os.path.join(lora_dir, 'flux_realism_lora.safetensors'), 'realism', 1.0])
         if enable_anti_blur:
-            loras.append([os.path.join(model_dir, 'supports/optional_loras/flux_anti_blur_lora.safetensors'), 'anti_blur', 1.0])
+            loras.append([os.path.join(lora_dir, 'flux_anti_blur_lora.safetensors'), 'anti_blur', 1.0])
         if loras:
             pipe.load_loras(loras)
 
