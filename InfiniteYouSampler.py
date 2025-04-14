@@ -103,6 +103,9 @@ class InfiniteYouSampler:
                 "enable_anti_blur": ("BOOLEAN", {
                     "default": False
                 }),
+                "quantize_8bit": ("BOOLEAN", {
+                    "default": True
+                }),
             },
         }
 
@@ -128,6 +131,7 @@ class InfiniteYouSampler:
         height=1152,
         enable_realism=False,
         enable_anti_blur=False,
+        quantize_8bit=True,
     ):
         # torch.cuda.set_device(comfy.model_management.get_torch_device())
 
@@ -154,6 +158,7 @@ class InfiniteYouSampler:
             insightface_root_path=insightface_root_path,
             infu_flux_version=infu_flux_version,
             model_version=model_version,
+            quantize_8bit=quantize_8bit,
         )
 
 
@@ -226,6 +231,7 @@ class InfiniteYouSampler:
         height,
         enable_realism,
         enable_anti_blur,
+        quantize_8bit,
     ):
         m = hashlib.sha256()
         m.update(id_image)
@@ -243,4 +249,5 @@ class InfiniteYouSampler:
         m.update(height)
         m.update(enable_realism)
         m.update(enable_anti_blur)
+        m.update(quantize_8bit)
         return m.digest().hex()
