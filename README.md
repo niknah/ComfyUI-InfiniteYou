@@ -1,4 +1,9 @@
 
+
+Bytedance has an official support for ComfyUI now...
+[https://github.com/bytedance/ComfyUI_InfiniteYou](https://github.com/bytedance/ComfyUI_InfiniteYou)
+
+
 Put anyone's face on anything with Byte Dance's [InfiniteYou](https://github.com/bytedance/InfiniteYou).
 
 ## Hardware
